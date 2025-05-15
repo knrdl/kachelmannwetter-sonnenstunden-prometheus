@@ -6,7 +6,7 @@ import json
 _cache_value: str | None = None
 _cache_ts: int | None = None
 
-def generate(area_id: int, station_id: int) -> str:
+def generate(area_id: int, station_id: str) -> str:
     global _cache_value, _cache_ts
 
     now = int(time.time())
@@ -20,7 +20,7 @@ def generate(area_id: int, station_id: int) -> str:
             'param_id': '64',
             'counter': 'false',
             'lang': 'DE',
-            'station_id': str(station_id), 
+            'station_id': station_id, 
             'timestamp': time.strftime('%Y%m%d%H00'), 
             'area_id': str(area_id)
         }))
