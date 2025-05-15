@@ -11,9 +11,7 @@ assert area_id and area_id.isdigit(), 'Env var area_id is missing or not a numbe
 area_id = int(area_id)
 
 station_id = os.getenv('station_id')
-assert station_id and station_id.isdigit(), 'Env var station_id is missing or not a number'
-station_id = int(station_id)
-
+assert station_id, 'Env var station_id is missing'
 
 class HttpHandler(http.server.BaseHTTPRequestHandler):
     protocol_version = 'HTTP/1.1'
