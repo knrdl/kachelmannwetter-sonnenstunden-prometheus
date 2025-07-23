@@ -6,6 +6,7 @@ https://kachelmannwetter.com/de/ajax/obsdetail?station_id=103850&timestamp=20241
 
 
 ```yaml
+services:
   kachelmannwetter-sonnenstunden:
     image: ghcr.io/knrdl/kachelmannwetter-sonnenstunden-prometheus:edge
     restart: always
@@ -13,4 +14,6 @@ https://kachelmannwetter.com/de/ajax/obsdetail?station_id=103850&timestamp=20241
       area_id: '39'
       station_id: '103850'
     mem_limit: 100m
+    ports:
+      - 8080:8080
 ```
