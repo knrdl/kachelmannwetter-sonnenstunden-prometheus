@@ -7,7 +7,14 @@ _cache_ts: int | None = None
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'Accept-Language': 'de,en-US;q=0.7,en;q=0.3',
+    'Pragma':	'no-cache',
+    'Priority': 'u=0, i',
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': 'none',
+    'Sec-GPC': '1'
 }
 ses = requests.Session()
 
@@ -19,7 +26,7 @@ def generate(area_id: int, station_id: str) -> str:
     if not _cache_ts or now - _cache_ts > 60 * 60:
         output = ''
 
-        resp = ses.get('https://kachelmannwetter.com/de/messwerte/stadt-berlin/sonnenstunden/20250723-0600z.html', headers=headers)
+        resp = ses.get('https://kachelmannwetter.com/de/messwerte/sonnenstunden', headers=headers)
 
         resp = ses.get('https://kachelmannwetter.com/de/ajax/obsdetail', headers=headers, params={
                 'model': 'obs',
@@ -32,7 +39,7 @@ def generate(area_id: int, station_id: str) -> str:
             })
 
         if resp.status_code != 200:
-            raise Exception(f'wrong response code: {resp.status_code}')
+            raise Exception(f'wrong response code={resp.status_code}; text={resp.text}; headers={resp.headers}')
         records: list[dict[str, int]] = json.loads(resp.text.split(' var hc_obs_series = ')[1].split(';')[0])[0]['data']
         for record in records:
             timestamp = record['x']
