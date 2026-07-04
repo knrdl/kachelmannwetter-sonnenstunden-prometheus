@@ -30,7 +30,7 @@ def generate(area_id: int, station_id: str) -> str:
 
         resp = ses.get('https://kachelmannwetter.com/de/messwerte/sonnenstunden', headers=headers)
 
-        time.sleep(.5)
+        time.sleep(.25)
 
         resp = ses.get('https://kachelmannwetter.com/de/ajax/obsdetail', headers=headers, params={
                 'model': 'obs',
