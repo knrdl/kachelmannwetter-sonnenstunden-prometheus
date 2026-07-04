@@ -9,12 +9,14 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
     'Accept-Language': 'de,en-US;q=0.7,en;q=0.3',
+    'Cache-Control':    'no-cache',
     'Pragma':	'no-cache',
     'Priority': 'u=0, i',
     'Sec-Fetch-Dest': 'document',
     'Sec-Fetch-Mode': 'navigate',
     'Sec-Fetch-Site': 'none',
-    'Sec-GPC': '1'
+    'Sec-GPC': '1',
+    'Upgrade-Insecure-Requests':	'1'
 }
 ses = requests.Session()
 
@@ -27,6 +29,8 @@ def generate(area_id: int, station_id: str) -> str:
         output = ''
 
         resp = ses.get('https://kachelmannwetter.com/de/messwerte/sonnenstunden', headers=headers)
+
+        time.sleep(.5)
 
         resp = ses.get('https://kachelmannwetter.com/de/ajax/obsdetail', headers=headers, params={
                 'model': 'obs',
